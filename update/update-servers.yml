@@ -1,0 +1,15 @@
+---
+- name: Upgrade O.S.
+  hosts: all
+  tasks:
+
+    - name: Set a 7.2
+      shell: subscription-manager release --set=7.2
+
+
+    - name: Actualiza todos los paquetes
+      yum:
+        name: '*'
+        state: latest
+        exclude: kernel*
+        disablerepo: "Artifactory*"

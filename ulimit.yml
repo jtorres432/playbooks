@@ -1,0 +1,10 @@
+---
+- name: Modificar ulimits
+  hosts: all
+  become: yes
+  tasks:
+  - name: Modificación de ulimit
+    lineinfile:
+      dest: /etc/security/limits.conf
+      regexp: '^* - nofile 32768'
+      line: 'root - nofile 32768'

@@ -1,0 +1,12 @@
+---
+- name: Check interfaces status
+  hosts: test
+  tasks:
+    - name: Check interface bond0 
+      shell: sudo journalctl | grep bonding
+      register: result
+
+    - name: Muestra resultados
+      debug: 
+        msg: El resultado {{result}}
+

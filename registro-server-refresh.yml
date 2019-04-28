@@ -1,0 +1,11 @@
+---
+- name: Registro servidores a Satellite
+  hosts: suscritos
+  tasks:
+
+    - name: Registrar Smart Management
+      shell: subscription-manager attach --pool=8af7506e671db0ba01671ddd34bb0639
+
+    - name: Activar repositorio Satellite Tools
+      shell: subscription-manager refresh
+

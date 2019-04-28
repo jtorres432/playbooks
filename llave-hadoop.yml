@@ -1,0 +1,6 @@
+---
+- name: Echo hola
+  hosts: all
+  tasks:
+    - name: echo hola
+      shell: echo "Hola servidores app"

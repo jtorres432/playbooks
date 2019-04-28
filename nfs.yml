@@ -1,0 +1,13 @@
+---
+- name: Instalar NFS
+  hosts: all
+  become: yes
+  tasks:
+  - name: Instalar NFS
+    shell: yum -y install nfs-utils --disablerepo=Artifactory*
+
+  - name: Habilitar NFS
+    shell: systemctl enable nfs-utils
+
+  - name: Habilitar NFS
+    shell: systemctl start nfs-utils

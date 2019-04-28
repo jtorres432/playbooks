@@ -1,0 +1,35 @@
+---
+- name: Cambiar bonding mode
+  hosts: alarmas6
+  become: yes
+  tasks:
+  - name: Modificación de mode
+    lineinfile:
+      dest: /etc/sysconfig/network-scripts/ifcfg-bond0
+      regexp: '^BOOTPROTO'
+      line: 'BOOTPROTO="static"'
+
+
+  - name: IP
+    lineinfile:
+      dest: /etc/sysconfig/network-scripts/ifcfg-bond0
+      line: 'IPADDR="{{ ansible_eno1.ipv4.address }}"'
+    ignore_errors: true
+
+  - name: gateway
+    lineinfile:
+      dest: /etc/sysconfig/network-scripts/ifcfg-bond0
+      line: 'GATEWAY="{{ ansible_default_ipv4.gateway }}"'
+
+  - name: Netmask
+    lineinfile:
+      dest: /etc/sysconfig/network-scripts/ifcfg-bond0
+      line: 'NETMASK="255.255.255.224"'
+
+  - name: Reinicio servicio red
+    shell: systemctl restart network
+
+  - name: Reinicio red
+    service:
+      name: network
+      state: restarted

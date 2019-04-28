@@ -1,0 +1,32 @@
+---
+- name: Registro servidores a Satellite
+  hosts: dmz
+  tasks:
+
+    - name: Satellite a /etc/hosts
+      lineinfile: 
+        dest: /etc/hosts
+        line: "10.119.208.238  ithhwc1sat1.ans"
+
+    - name: Descargando certificado satellite
+      shell: rpm -Uvh http://ithhwc1sat1.ans/pub/katello-ca-consumer-latest.noarch.rpm
+      ignore_errors: yes
+
+    - name: Registro contra Satellite
+      shell: subscription-manager register --org="OYMTelcel" --activationkey="hadoop_key"
+      ignore_errors: yes
+
+    - name: Registro Smart management
+      shell: subscription-manager attach --pool=8af7506e671db0ba01671ddd34bb0639
+
+    - name: Activar repositorio Satellite Tools
+      shell: subscription-manager repos --enable=rhel-\*-satellite-tools-\*-rpms
+
+    - name: Version de release a 7.2
+      shell: subscription-manager release --set=7.2
+
+    - name: Verificar repositorios
+      shell: yum repolist --disablerepo=Artifactory*
+
+    - name: Instalar katello-agent
+      shell: yum -y install katello-agent --disablerepo=Artifactory*
