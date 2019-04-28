@@ -1,6 +1,6 @@
 ---
 - name: Check interfaces status
-  hosts: alarmas6
+  hosts: all
   gather_facts: true
   tasks:
     - name: Registro ip
