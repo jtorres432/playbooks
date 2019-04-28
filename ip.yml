@@ -1,0 +1,17 @@
+---
+- name: Check interfaces status
+  hosts: alarmas6
+  gather_facts: true
+  tasks:
+    - name: Registro ip
+      debug: 
+        msg: La ip es "{{ ansible_eno1.ipv4.address }}" si
+
+    - name: Registro mascara
+      debug:
+        msg: La gateway es "{{ ansible_default_ipv4.gateway }}" si
+
+    - name: Registro mascara
+      debug:
+        msg: La mascara es "{{ ansible_default_ipv4.netmask }}" si
+

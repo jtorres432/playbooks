@@ -1,0 +1,125 @@
+---
+- name: replace fstab
+  hosts: all
+  become: yes
+  tasks:
+  - name: Respaldo fstab
+    shell: cp /etc/fstab /etc/fstab-bk
+
+  - name: Captura de variable
+    shell: 'blkid {{item}} -s UUID -o value'
+    loop:
+       - /dev/sdb1
+       - /dev/sdc1
+       - /dev/sdd1
+       - /dev/sde1
+       - /dev/sdf1
+       - /dev/sdg1
+       - /dev/sdh1
+       - /dev/sdi1
+       - /dev/sdj1
+       - /dev/sdk1
+       - /dev/sdl1
+       - /dev/sdm1
+    register: "UUID"
+    ignore_errors: true
+
+  - name: Modificación de fstab de /data/disk*
+    lineinfile:
+      dest: /etc/fstab
+      regexp: '^/dev/sdb1'
+      line: 'UUID={{UUID.results.0.stdout}}            /data0  ext4    defaults,noatime        0 2'
+    when: UUID.results.1.stdout != ""
+    ignore_errors: true
+
+  - name: Modificación de fstab de /data/disk*
+    lineinfile:
+      dest: /etc/fstab
+      regexp: '^/dev/sdc1'
+      line: 'UUID={{UUID.results.1.stdout}}            /data1  ext4    defaults,noatime        0 2'
+    when: UUID.results.1.stdout != ""
+    ignore_errors: true
+
+  - name: Modificación de fstab de /data/disk*
+    lineinfile:
+      dest: /etc/fstab
+      regexp: '^/dev/sdd1'
+      line: 'UUID={{UUID.results.2.stdout}}            /data2  ext4    defaults,noatime        0 2'
+    when: UUID.results.2.stdout != ""
+    ignore_errors: true
+
+  - name: Modificación de fstab de /data/disk*
+    lineinfile:
+      dest: /etc/fstab
+      regexp: '^/dev/sde1'
+      line: 'UUID={{UUID.results.3.stdout}}            /data3  ext4    defaults,noatime        0 2'
+    when: UUID.results.3.stdout != ""
+    ignore_errors: true
+
+  - name: Modificación de fstab de /data/disk*
+    lineinfile:
+      dest: /etc/fstab
+      regexp: '^/dev/sdf1'
+      line: 'UUID={{UUID.results.4.stdout}}           /data4  ext4    defaults,noatime        0 2'
+    when: UUID.results.4.stdout != ""
+    ignore_errors: true
+
+  - name: Modificación de fstab de /data/disk*
+    lineinfile:
+      dest: /etc/fstab
+      regexp: '^/dev/sdg1'
+      line: 'UUID={{UUID.results.5.stdout}}           /data5  ext4    defaults,noatime        0 2'
+    when: UUID.results.5.stdout != ""
+    ignore_errors: true
+
+  - name: Modificación de fstab de /data/disk*
+    lineinfile:
+      dest: /etc/fstab
+      regexp: '^/dev/sdh1'
+      line: 'UUID={{UUID.results.6.stdout}}           /data6  ext4    defaults,noatime        0 2'
+    when: UUID.results.6.stdout != ""
+    ignore_errors: true
+
+  - name: Modificación de fstab de /data/disk*
+    lineinfile:
+      dest: /etc/fstab
+      regexp: '^/dev/sdi1'
+      line: 'UUID={{UUID.results.7.stdout}}           /data7  ext4    defaults,noatime        0 2'
+    when: UUID.results.7.stdout != ""
+    ignore_errors: true
+
+  - name: Modificación de fstab de /data/disk*
+    lineinfile:
+      dest: /etc/fstab
+      regexp: '^/dev/sdj1'
+      line: 'UUID={{UUID.results.8.stdout}}           /data8  ext4    defaults,noatime        0 2'
+    when: UUID.results.8.stdout != ""
+    ignore_errors: true
+
+  - name: Modificación de fstab de /data/disk*
+    lineinfile:
+      dest: /etc/fstab
+      regexp: '^/dev/sdk1'
+      line: 'UUID={{UUID.results.9.stdout}}           /data9  ext4    defaults,noatime        0 2'
+    when: UUID.results.9.stdout != ""
+    ignore_errors: true
+
+  - name: Modificación de fstab de /data/disk*
+    lineinfile:
+      dest: /etc/fstab
+      regexp: '^/dev/sdl1'
+      line: 'UUID={{UUID.results.10.stdout}}          /data10  ext4    defaults,noatime        0 2'
+    when: UUID.results.10.stdout != ""
+    ignore_errors: true
+
+  - name: Modificación de fstab de /data/disk*
+    lineinfile:
+      dest: /etc/fstab
+      regexp: '^/dev/sdm1'
+      line: 'UUID={{UUID.results.11.stdout}}          /data11  ext4    defaults,noatime        0 2'
+    when: UUID.results.11.stdout != ""
+    ignore_errors: true
+
+  - name: Re-montar discos
+    shell: mount -a
+

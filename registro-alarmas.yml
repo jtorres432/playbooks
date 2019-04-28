@@ -1,0 +1,30 @@
+---
+- name: Registro servidores a Satellite
+  hosts: alarmas6
+  tasks:
+
+    - name: Registro contra Satellite
+      shell: subscription-manager register --org="OYMTelcel" --activationkey="cloudera_key" --force
+      ignore_errors: yes
+
+    - name: Registro Smart management
+      shell: subscription-manager attach --pool=8af7506e671db0ba01671ddd34bb0639
+
+    - name: Version de release a 7.5
+      shell: subscription-manager release --set=7.5
+
+    - name: Instalar paquetes
+      yum:
+        name: 
+          - katello-agent
+          - nscd
+          - sshpass
+          - sssd
+          - sssd-tools
+        state: present
+
+    - name: Habilitar e iniciar servicio nscd
+      service:
+        name: nscd
+        state: started
+        enabled: yes
