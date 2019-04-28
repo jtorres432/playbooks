@@ -5,7 +5,7 @@
   tasks:
     - name: Registro ip
       debug: 
-        msg: La ip es "{{ ansible_eno1.ipv4.address }}" si
+        msg: La ip es "{{ ansible_eth0.ipv4.address }}" si
 
     - name: Registro mascara
       debug:
